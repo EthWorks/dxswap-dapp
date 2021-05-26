@@ -13,6 +13,7 @@ import { useActiveWeb3React } from '../../hooks'
 import { useOnClickOutside } from '../../hooks/useOnClickOutside'
 import { NETWORK_DETAIL } from '../../constants'
 import { CustomNetworkConnector } from '../../connectors/CustomNetworkConnector'
+import { Placement } from '@popperjs/core'
 
 const OptionGrid = styled.div`
   display: grid;
@@ -23,9 +24,15 @@ const OptionGrid = styled.div`
   `};
 `
 
-export default function NetworkSwitcherPopover({ children }: { children: ReactNode }) {
+interface NetworkSwitcherPopoverProps {
+  children: ReactNode;
+  modal: ApplicationModal
+  placement?: Placement
+}
+
+export default function NetworkSwitcherPopover({ children, modal, placement }: NetworkSwitcherPopoverProps) {
   const { connector } = useActiveWeb3React()
-  const networkSwitcherPopoverOpen = useModalOpen(ApplicationModal.NETWORK_SWITCHER)
+  const networkSwitcherPopoverOpen = useModalOpen(modal)
   const popoverRef = useRef(null)
   const addPopup = useAddPopup()
   const closeModals = useCloseModals()
@@ -57,6 +64,7 @@ export default function NetworkSwitcherPopover({ children }: { children: ReactNo
   return (
     <div ref={popoverRef} style={{ height: 22 }}>
       <Popover
+        placement={placement}
         content={
           <OptionGrid>
             <Option
