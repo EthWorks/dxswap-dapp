@@ -23,6 +23,7 @@ import XDAILogo from '../../assets/images/xdai-stake-logo.png'
 import ArbitrumLogo from '../../assets/images/arbitrum-logo.jpg'
 import { ChainId } from 'dxswap-sdk'
 import { useActiveWeb3React } from '../../hooks'
+import { ApplicationModal } from '../../state/application/actions'
 
 const ChainLogo: any = {
   [ChainId.MAINNET]: EthereumLogo,
@@ -187,7 +188,7 @@ function Web3StatusInner() {
             {t('No wallet connected')}
           </Web3StatusConnect>
         )}
-        <NetworkSwitcherPopover>
+        <NetworkSwitcherPopover modal={ApplicationModal.NETWORK_SWITCHER}>
           <Web3StatusNetwork onClick={!!!account ? toggleNetworkSwitcherPopover : () => {}}>
             <IconWrapper size={20}>
               <img src={ChainLogo[networkConnectorChainId]} alt={''} />
